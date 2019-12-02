@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
-public class TaskOne {
+public class TestTaskOne {
 
      private WebDriver driver;
      private String baseUrl;
