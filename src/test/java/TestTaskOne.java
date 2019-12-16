@@ -20,7 +20,7 @@ public class TestTaskOne {
           System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
           driver = new ChromeDriver();
           baseUrl = "http://www.sberbank.ru/ru/person";
-          driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+          driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
           driver.manage().window().maximize();
      }
 
@@ -28,6 +28,7 @@ public class TestTaskOne {
      public void testInsurance() throws Exception {
           driver.get(baseUrl + "/");
           clicks(By.xpath("//span[@class = 'lg-menu__text'][text() = 'Страхование']"));
+          Thread.sleep(2000);
           clicks(By.xpath("//*[@id='submenu-5']/div/div/div[1]/ul/li[2]"));
 
           assertEquals("Страхование путешественников",
