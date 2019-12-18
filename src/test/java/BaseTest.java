@@ -1,6 +1,4 @@
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -8,10 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-
 import static org.junit.Assert.assertEquals;
 
 public class BaseTest {
@@ -52,12 +50,39 @@ public class BaseTest {
         }
     }
 
-    protected void fillField(By locator, String value) {
-        driver.findElement(locator).clear();
-        driver.findElement(locator).sendKeys(value);
+    protected void fillField(WebElement element, String value) {
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        element.clear();
+        element.sendKeys(value);
     }
 
     protected void checkFillField(String value, By locator) {
         assertEquals(value, driver.findElement(locator).getAttribute("value"));
+    }
+
+    protected void clicks(WebElement element) {
+
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 20);
+            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+}
+
+protected void openNewWindow (){
+    for (String winHandle : driver.getWindowHandles()) {
+        driver.switchTo().window(winHandle);
+    }
+}
+protected void checkText(WebElement element){
+    assertEquals("Заполнены не все обязательные поля",
+                    element.getText());
+}
+    public void waitToBeClickable(WebDriver driver, WebElement element){
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 }
